@@ -1,0 +1,32 @@
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons';
+
+
+h1 {
+    font-family:"ComicNeueSansID";
+    font-size: 25;
+    color: rebeccapurple;
+}
+
+h2 {
+    font-family:sans-serif;
+    font-size: 20;
+    color: lightblue;
+}
+
+h3 {
+    font-family:sans-serif;
+    font-size: 15;
+    color: rgb(77, 175, 255);
+}
+
+
+body {
+    background-color: rgb(175, 175, 175);
+}
+
+p {
+    font-family:'Times New Roman', Times, serif;
+    font-size: 12;
+    color: rgb(0, 0, 0);
+}
