@@ -10,16 +10,5 @@ class PagesController < ApplicationController
     def contact
       # Logic for contact page (if any)
     end
-
-    def index
-      @posts = Post.all
-      
-      end
-  
-      def show
-          id= params['id']
-          @post=Post.find(id)
-          
-      end
   end
   
