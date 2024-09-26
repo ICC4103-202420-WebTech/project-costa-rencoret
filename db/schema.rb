@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_25_232004) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_26_015744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,8 +29,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_232004) do
     t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "utilizer_id"
     t.index ["course_id"], name: "index_course_enrollments_on_course_id"
     t.index ["student_id"], name: "index_course_enrollments_on_student_id"
+    t.index ["utilizer_id"], name: "index_course_enrollments_on_utilizer_id"
   end
 
   create_table "course_progresses", force: :cascade do |t|
@@ -39,6 +41,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_232004) do
     t.integer "completed_lessons"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "progress_percentage", precision: 5, scale: 2, default: "0.0", null: false
     t.index ["course_id"], name: "index_course_progresses_on_course_id"
     t.index ["utilizer_id"], name: "index_course_progresses_on_utilizer_id"
   end
@@ -90,11 +93,13 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_232004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role_id"
+    t.string "role", default: "student", null: false
   end
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "utilizers"
   add_foreign_key "course_enrollments", "courses"
+  add_foreign_key "course_enrollments", "utilizers"
   add_foreign_key "course_enrollments", "utilizers", column: "student_id"
   add_foreign_key "course_progresses", "courses"
   add_foreign_key "course_progresses", "utilizers"
