@@ -28,7 +28,20 @@ lesson1_1 =Lesson.create!(title: "Clase 1", content: "En esta clase veremos lo s
 forum1_1 = Forum.create!(title: "Dudas Clase 1", lesson: lesson1_1)
 
 
-enroll1 = CourseEnrollment.create!(student: student1, course: course1)
+enroll1 = CourseEnrollment.create!(utilizer: student1, course: course1)
 
 question1_1 = Question.create!(title: "Sobre la parte 2", content: "Profesor, no entendi que hace en la parte 2, como funciona?", forum: forum1_1, utilizer: student1)
 answer1_1 = Answer.create!(question: question1_1, utilizer: teacher1, content: "Funciona de la siguiente manera: ...")
+
+teacher2 = Utilizer.create!(email: "email3@gmail.com", name: "Laura", last_name: "Gonzalez", password: "clave987", login: "lgonza", role_id: 1)
+student2 = Utilizer.create!(email: "email4@gmail.com", name: "Juan", last_name: "Martinez", password: "clave54321", login: "jmartinez", role_id: 1)
+
+course2 = Course.create!(name: "Data Science", category: "Informática", teacher: teacher2)
+lesson2_1 = Lesson.create!(title: "Introducción a Data Science", content: "En esta lección aprenderemos sobre los fundamentos de Data Science.", course: course2)
+forum2_1 = Forum.create!(title: "Dudas sobre Introducción", lesson: lesson2_1)
+
+enroll2 = CourseEnrollment.create!(utilizer: student2, course: course2)
+
+question2_1 = Question.create!(title: "Pregunta sobre la lección", content: "Profesora, ¿puede aclarar el concepto de modelado de datos?", forum: forum2_1, utilizer: student2)
+answer2_1 = Answer.create!(question: question2_1, utilizer: teacher2, content: "El modelado de datos se refiere a la representación estructurada de los datos.")
+

@@ -25,13 +25,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_26_015744) do
   end
 
   create_table "course_enrollments", force: :cascade do |t|
-    t.bigint "student_id"
-    t.bigint "course_id"
+    t.bigint "utilizer_id", null: false
+    t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "utilizer_id"
     t.index ["course_id"], name: "index_course_enrollments_on_course_id"
-    t.index ["student_id"], name: "index_course_enrollments_on_student_id"
     t.index ["utilizer_id"], name: "index_course_enrollments_on_utilizer_id"
   end
 
@@ -100,7 +98,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_26_015744) do
   add_foreign_key "answers", "utilizers"
   add_foreign_key "course_enrollments", "courses"
   add_foreign_key "course_enrollments", "utilizers"
-  add_foreign_key "course_enrollments", "utilizers", column: "student_id"
   add_foreign_key "course_progresses", "courses"
   add_foreign_key "course_progresses", "utilizers"
   add_foreign_key "courses", "utilizers", column: "teacher_id"

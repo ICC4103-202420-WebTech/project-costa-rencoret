@@ -7,5 +7,8 @@ class LessonsController < ApplicationController
 
     def show
       @lesson = Lesson.find params['id']
+
+      @forum = @lesson.forums
+      
     end
   end

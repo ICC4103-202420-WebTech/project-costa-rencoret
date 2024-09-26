@@ -9,5 +9,13 @@
 
 
   </article>
-  
+
+
+  <h2>Lesson Forums:</h2>
+  <ul>
+    <% @forum.each do |forum| %>
+      <li><%= forum.title %> - <a href="#" class="card-link"><%= link_to "Click to see forum", forum_path(forum) %></a></li>
+      
+    <% end %>
+  </ul>
 </div>
