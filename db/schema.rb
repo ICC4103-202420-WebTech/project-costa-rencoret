@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_25_220145) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_25_232004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,7 +18,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_220145) do
     t.bigint "question_id", null: false
     t.bigint "utilizer_id", null: false
     t.text "content"
-    t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
@@ -76,7 +75,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_25_220145) do
     t.bigint "utilizer_id", null: false
     t.string "title"
     t.text "content"
-    t.datetime "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["forum_id"], name: "index_questions_on_forum_id"

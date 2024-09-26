@@ -1,0 +1,13 @@
+<div class="container">
+
+
+  <article class="blog-post">
+    <h2 class="display-5 link-body-emphasis mb-1"><%= @lesson.title %></h2>
+    <p class="blog-post-meta"><%= @lesson.created_at %> by <%= @lesson.course.teacher.full_name %></p>
+
+     <p><%= @lesson.content %></p>
+
+
+  </article>
+  
+</div>

@@ -1,0 +1,17 @@
+<div class="container">
+
+
+  <article class="blog-post">
+    <h2 class="display-5 link-body-emphasis mb-1"><%= @course.name %></h2>
+    <p class="blog-post-meta"><%= @course.created_at %> by <%= @course.teacher.full_name %></p>
+
+
+  </article>
+  <h2>Lessons:</h2>
+  <ul>
+    <% @lessons.each do |lesson| %>
+      <li><%= lesson.title %> - <%= lesson.course.teacher.full_name %> - <a href="#" class="card-link"><%= link_to "Click to see lesson", lesson_path(lesson) %></a></li>
+      
+    <% end %>
+  </ul>
+</div>

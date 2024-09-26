@@ -10,5 +10,9 @@ class Utilizer < ApplicationRecord
       teacher: 1
     }
     
+    def full_name
+      "#{name} #{last_name}"
+    end
+
   end
   
