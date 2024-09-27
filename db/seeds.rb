@@ -8,14 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Utilizer.delete_all
-Course.delete_all
-Lesson.delete_all
-Forum.delete_all
-CourseEnrollment.delete_all
-CourseProgress.delete_all
-Question.delete_all
-Answer.delete_all
+
+
 
 
 teacher1 = Utilizer.create!(email: "email1@gmail.com", name: "Carlos", last_name: "Rencoret", password: "hola123", login: "cjrenco", role_id: 1)
