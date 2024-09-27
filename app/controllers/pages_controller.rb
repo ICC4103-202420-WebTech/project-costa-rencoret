@@ -10,5 +10,9 @@ class PagesController < ApplicationController
     def contact
       # Logic for contact page (if any)
     end
+    
+    def home
+      @latest_courses = Course.order(created_at: :desc).limit(3)
+    end
   end
   
