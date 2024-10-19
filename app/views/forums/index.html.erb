@@ -1,14 +1,22 @@
 <div class="container">
-  <h1>Forums</h1>
+  <h1>Forums for Lesson: <%= @lesson.title %></h1>
 
-    <% @forums.each do |forum| %>
-    <div class="card" >
+  <%= link_to 'New Forum', new_course_lesson_forum_path(@course, @lesson), class: 'btn btn-success mb-3' %>
+
+  <% @forums.each do |forum| %>
+    <div class="card mb-3">
       <div class="card-body">
-        <h5 class="card-title"><%=forum.title %></h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">Written by: <%=forum.lesson.course.teacher.full_name %></h6>
-        <a href="#" class="card-link"><%= link_to "Click to see forum", forum_path(forum) %></a>
+        <h5 class="card-title"><%= forum.title %></h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">Written by: <%= forum.lesson.course.teacher.full_name %></h6>
+        
+        <%= link_to "Click to see forum", course_lesson_forum_path(@course, @lesson, forum), class: 'card-link' %>
+        
+        <!-- Edit Button -->
+        <%= link_to 'Edit', edit_course_lesson_forum_path(@course, @lesson, forum), class: 'btn btn-primary btn-sm' %>
+        
+        <!-- Delete Button -->
+        <%= link_to 'Delete', course_lesson_forum_path(@course, @lesson, forum), method: :delete, data: { confirm: 'Are you sure you want to delete this forum?' }, class: 'btn btn-danger btn-sm' %>
       </div>
     </div>
-    <% end %>
-
+  <% end %>
 </div>

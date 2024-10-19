@@ -1,0 +1,14 @@
+<div class="container">
+  <h1><%= @question.title %></h1>
+  <p>By <%= @question.utilizer.full_name %></p>
+  <p><%= @question.content %></p>
+  <h3>Answers:</h3>
+  <ul class="list-group">
+    <% @question.answers.each do |answer| %>
+      <li class="list-group-item">
+        <strong><%= answer.utilizer.full_name %>:</strong> <%= answer.content %>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to 'Back to Questions', course_lesson_forum_questions_path(@forum.lesson.course, @forum.lesson, @forum), class: 'btn btn-secondary' %>
+</div>

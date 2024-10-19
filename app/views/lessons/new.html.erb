@@ -1,6 +1,6 @@
 <div class="container">
   <h1>New Lesson</h1>
-  <%= form_with model: @lesson, local: true do |form| %>
+  <%= form_with model: [@course, @lesson], local: true do |form| %> <!-- Use nested resources -->
     <% if @lesson.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(@lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>

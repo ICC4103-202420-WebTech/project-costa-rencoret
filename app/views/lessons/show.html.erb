@@ -1,21 +1,9 @@
 <div class="container">
-
-
   <article class="blog-post">
     <h2 class="display-5 link-body-emphasis mb-1"><%= @lesson.title %></h2>
     <p class="blog-post-meta"><%= @lesson.created_at %> by <%= @lesson.course.teacher.full_name %></p>
-
-     <p><%= @lesson.content %></p>
-
-
+    <p><%= @lesson.content %></p>
   </article>
-
-
   <h2>Lesson Forums:</h2>
-  <ul>
-    <% @forum.each do |forum| %>
-      <li><%= forum.title %> - <a href="#" class="card-link"><%= link_to "Click to see forum", forum_path(forum) %></a></li>
-      
-    <% end %>
-  </ul>
+  <%= link_to 'View All Forums', course_lesson_forums_path(@course, @lesson), class: 'btn btn-primary' %>
 </div>

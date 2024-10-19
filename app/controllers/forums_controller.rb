@@ -1,75 +1,69 @@
 class ForumsController < ApplicationController
-  def index
-      @forums = Forum.all
-    end 
+  before_action :set_course_and_lesson, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+  before_action :set_forum, only: [:show, :edit, :update, :destroy]
 
-    def show
-      puts params.inspect  
-      
-      @forum = Forum.find(params['id'])
-      @questions = @forum.questions
-      
-      if params['question_id'].present?
-        @question = @questions.find_by(id: params['question_id'])
-        
-        if @question
-          @answers = @question.answers
-        else
-          @answers = []
-          redirect_to forum_path(@forum), alert: "Question not found"
-          return
-        end
-      else
-        @answers = []
-      end
-      
-      puts @answers.inspect  
-      
-      if @questions.empty?
-        flash.now[:notice] = "No questions found for this forum."
-      end
+  def index
+    @forums = @lesson.forums
+  end
+
+  def show
+    @questions = @forum.questions
+    if params['question_id'].present?
+      @question = @questions.find_by(id: params['question_id'])
+      @answers = @question ? @question.answers : []
+      redirect_to lesson_forum_path(@lesson, @forum), alert: "Question not found" unless @question
+    else
+      @answers = []
     end
     
+    flash.now[:notice] = "No questions found for this forum." if @questions.empty?
+  end
 
   def new
-    @forum = Forum.new
-    @lessons = Lesson.all # For the select field
+    @forum = @lesson.forums.new
   end
 
   def create
-    @forum = Forum.new(forum_params)
+    @forum = @lesson.forums.new(forum_params)
     if @forum.save
-      redirect_to @forum, notice: 'Forum was successfully created.'
+      redirect_to course_lesson_forums_path(@course, @lesson), notice: 'Forum was successfully created.'
     else
-      @lessons = Lesson.all
       render :new
     end
   end
-
+  
   def edit
-    @forum = Forum.find(params[:id])
-    @lessons = Lesson.all # For the select field
+
   end
 
-  def update
-    @forum = Forum.find(params[:id])
-    if @forum.update(forum_params)
-      redirect_to @forum, notice: 'Forum was successfully updated.'
-    else
-      @lessons = Lesson.all
-      render :edit
-    end
+def update
+  if @forum.update(forum_params)
+    redirect_to course_lesson_forums_path(@course, @lesson), notice: 'Forum was successfully updated.'
+  else
+    render :edit
   end
+end
+
 
   def destroy
-    @forum = Forum.find(params[:id])
     @forum.destroy
-    redirect_to forums_path, notice: 'Forum was successfully deleted.'
+    redirect_to lesson_forums_path(@lesson), notice: 'Forum was successfully deleted.'
   end
 
   private
 
+  def set_course_and_lesson
+    @course = Course.find(params[:course_id])               
+    @lesson = @course.lessons.find(params[:lesson_id])      
+  end
+
+  def set_forum
+    @forum = @lesson.forums.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to lesson_forums_path(@lesson), alert: "Forum not found."
+  end
+
   def forum_params
-    params.require(:forum).permit(:title, :lesson_id)
+    params.require(:forum).permit(:title)
   end
 end
