@@ -3,12 +3,34 @@ class ForumsController < ApplicationController
       @forums = Forum.all
     end 
 
-  def show
-    @forum = Forum.find params['id']
-    @questions = @forum.questions
-    @question = Question.find params['id']
-    @answers = @question.answers
-  end
+    def show
+      puts params.inspect  
+      
+      @forum = Forum.find(params['id'])
+      @questions = @forum.questions
+      
+      if params['question_id'].present?
+        @question = @questions.find_by(id: params['question_id'])
+        
+        if @question
+          @answers = @question.answers
+        else
+          @answers = []
+          redirect_to forum_path(@forum), alert: "Question not found"
+          return
+        end
+      else
+        @answers = []
+      end
+      
+      puts @answers.inspect  
+      
+      if @questions.empty?
+        flash.now[:notice] = "No questions found for this forum."
+      end
+    end
+    
+
   def new
     @forum = Forum.new
     @lessons = Lesson.all # For the select field
