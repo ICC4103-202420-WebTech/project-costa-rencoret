@@ -44,10 +44,19 @@ class LessonsController < ApplicationController
   
 
   def destroy
-    @lesson = @course.lessons.find(params[:id])
-    @lesson.destroy
-    redirect_to course_lessons_path(@course), notice: 'Lesson was successfully deleted.'
+    @course = Course.find(params[:course_id]) # Ensure @course is set
+  
+    # Attempt to find the lesson associated with the course
+    @lesson = @course.lessons.find_by(id: params[:id])
+    
+    if @lesson
+      @lesson.destroy
+      redirect_to course_lessons_path(@course), notice: 'Lesson was successfully deleted.'
+    else
+      redirect_to course_lessons_path(@course), alert: 'Lesson not found or does not belong to this course.'
+    end
   end
+  
 
   private
 

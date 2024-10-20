@@ -8,7 +8,7 @@
       <%= lesson.title %> - <%= lesson.course.teacher.full_name %> - 
       <%= link_to "Click to see lesson", course_lesson_path(@course, lesson), class: 'card-link' %>
       <%= link_to 'Edit', edit_course_lesson_path(@course, lesson), class: 'btn btn-primary btn-sm' %>
-      <%= link_to 'Delete', course_lesson_path(@course, lesson), method: :delete, data: { confirm: 'Are you sure you want to delete this lesson?' }, class: 'btn btn-danger btn-sm' %>
+      <%= button_to 'Delete', course_lesson_path(@course, lesson), method: :delete , class: 'btn btn-danger btn-sm' , data: {turbo_confirm: 'Are you sure?'}  %>
     </li>
   <% end %>
 </ul>
