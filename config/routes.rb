@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   resources :courses do
     resources :lessons do
       resources :forums do
-        resources :questions  
+        resources :questions do
+          resources :answers
+        end
       end
     end
   end

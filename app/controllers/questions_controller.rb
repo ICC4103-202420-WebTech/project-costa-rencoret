@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
     
     def create
       @question = @forum.questions.new(question_params)
-      @question.utilizer = current_user
+      @question.utilizer = current_utilizer
       if @question.save
         redirect_to course_lesson_forum_path(@forum.lesson.course, @forum.lesson, @forum), notice: 'Question was successfully created.'
       else
