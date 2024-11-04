@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :utilizers
+  devise_for :utilizers, controllers: { registrations: 'users/registrations' }
   get "up" => "rails/health#show"
   get "service-worker" => "rails/pwa#service_worker"
   get "manifest" => "rails/pwa#manifest"

@@ -1,4 +1,7 @@
 class CoursesController < ApplicationController
+    before_action :authenticate_utilizer!
+    before_action :set_course, only: [:edit, :update, :destroy]
+    before_action :authorize_teacher!, only: [:new, :create, :edit, :update, :destroy]
 
     def index
       @courses = Course.all
@@ -42,6 +45,14 @@ class CoursesController < ApplicationController
     end
   
     private
+
+    def set_course
+      @course = Course.find(params[:id])
+    end
+  
+    def authorize_teacher!
+      redirect_to root_path, alert: 'You are not authorized to perform this action.' unless current_utilizer.teacher?
+    end
   
     def course_params
       params.require(:course).permit(:name, :category, :teacher_id)
