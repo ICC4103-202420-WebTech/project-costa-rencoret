@@ -1,5 +1,5 @@
 class LessonsController < ApplicationController
-  before_action :set_course, only: [ :new, :create, :index, :show ]
+  before_action :set_course, only: [:new, :create, :index, :show, :edit, :update, :destroy]
 
   def index
     @lessons = @course.lessons
@@ -7,7 +7,7 @@ class LessonsController < ApplicationController
 
   def show
     @lesson = @course.lessons.find(params[:id])
-    @forum = @lesson.forums
+    @forums = @lesson.forums
   end
 
   def new
@@ -17,14 +17,13 @@ class LessonsController < ApplicationController
   def create
     @lesson = @course.lessons.new(lesson_params)
     if @lesson.save
-      redirect_to [ @course, @lesson ], notice: "Lesson was successfully created."
+      redirect_to [@course, @lesson], notice: "Lesson was successfully created."
     else
       render :new
     end
   end
 
   def edit
-    @course = Course.find(params[:course_id])
     @lesson = @course.lessons.find_by(id: params[:id])
     if @lesson.nil?
       redirect_to course_lessons_path(@course), alert: 'Lesson not found.'
@@ -32,19 +31,16 @@ class LessonsController < ApplicationController
   end
   
   def update
-    @course = Course.find(params[:course_id])
     @lesson = @course.lessons.find(params[:id])
     if @lesson.update(lesson_params)
       flash[:notice] = "Lesson was successfully updated."
-      redirect_to course_lessons_path(@course)
+      redirect_to course_path(@course)
     else
       render :edit
     end
   end
 
-
   def destroy
-    @course = Course.find(params[:course_id])
     @lesson = @course.lessons.find_by(id: params[:id])
     if @lesson
       @lesson.destroy
@@ -54,7 +50,6 @@ class LessonsController < ApplicationController
     end
     redirect_to course_path(@course)
   end
-
 
   private
 

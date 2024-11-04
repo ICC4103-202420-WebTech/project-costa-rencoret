@@ -1,9 +1,27 @@
-<div class="container">
-  <article class="blog-post">
-    <h2 class="display-5 link-body-emphasis mb-1"><%= @lesson.title %></h2>
-    <p class="blog-post-meta"><%= @lesson.created_at %> by <%= @lesson.course.teacher.full_name %></p>
-    <p><%= @lesson.content %></p>
-  </article>
-  <h2>Lesson Forums:</h2>
-  <%= link_to 'View All Forums', course_lesson_forums_path(@course, @lesson), class: 'btn btn-primary' %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h1 class="mb-4"><%= @lesson.title %></h1>
+      <p class="lead"><%= @lesson.content %></p>
+
+      <h2 class="mt-4">Forums</h2>
+      <% if @forums.any? %>
+        <ul class="list-group">
+          <% @forums.each do |forum| %>
+            <li class="list-group-item">
+              <%= link_to forum.title, course_lesson_forum_path(@course, @lesson, forum), class: "btn btn-link" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="alert alert-info mt-3" role="alert">
+          No forums available for this lesson.
+        </div>
+      <% end %>
+
+      <div class="mt-4">
+        <%= link_to 'New Forum', new_course_lesson_forum_path(@course, @lesson), class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
 </div>
