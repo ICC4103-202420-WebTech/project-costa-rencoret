@@ -33,21 +33,27 @@ class ForumsController < ApplicationController
   end
   
   def edit
-
+    @course = Course.find(params[:course_id]) # Find the course
+    @lesson = @course.lessons.find(params[:lesson_id]) # Find the lesson
+    @forum = @lesson.forums.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to course_lesson_forums_path(@course, @lesson), alert: "Forum not found."
   end
 
-def update
-  if @forum.update(forum_params)
-    redirect_to course_lesson_forums_path(@course, @lesson), notice: 'Forum was successfully updated.'
-  else
-    render :edit
+  def update
+    if @forum.update(forum_params)
+      redirect_to course_lesson_forums_path(@course, @lesson), notice: 'Forum was successfully updated.'
+    else
+      render :edit
+    end
   end
-end
 
 
   def destroy
+    @forum = @lesson.forums.find(params[:id]) # Ensure you find the forum first
     @forum.destroy
-    redirect_to lesson_forums_path(@lesson), notice: 'Forum was successfully deleted.'
+    flash[:notice] = 'Forum was successfully deleted.'
+    redirect_to course_lesson_forums_path(@course, @lesson) # Use the correct path helper
   end
 
   private
