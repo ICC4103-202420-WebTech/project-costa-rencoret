@@ -8,8 +8,7 @@ class Utilizer < ApplicationRecord
     has_many :course_enrollments
     has_many :enrolled_courses, through: :course_enrollments, source: :course
     has_many :course_progresses
-    validates :email, :login, :password, :name, :last_name, :role, presence: true
-    validates :email, uniqueness: true
+    validates :email, :password, :name, :last_name, :role, presence: true
 
     enum role: { student: 'student', teacher: 'teacher' }
     
