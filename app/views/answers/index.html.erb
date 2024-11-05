@@ -1,11 +1,10 @@
 <div class="container">
-  <h1><%= @question.title %></h1>
-  <p>By <%= @question.utilizer.full_name %></p>
-  <p><%= @question.content %></p>
+  <h1>Answers for "<%= @question.title %>"</h1>
 
-  <h3>Answers:</h3>
+  <%= link_to 'Add an Answer', new_course_lesson_forum_question_answer_path(@question.forum.lesson.course, @question.forum.lesson, @question.forum, @question), class: 'btn btn-success mb-3' %>
+
   <ul class="list-group">
-    <% @question.answers.each do |answer| %>
+    <% @answers.each do |answer| %>
       <li class="list-group-item">
         <strong><%= answer.utilizer.full_name %>:</strong> <%= answer.content %>
         <% if answer.utilizer == current_utilizer %>
@@ -15,8 +14,4 @@
       </li>
     <% end %>
   </ul>
-
-  <%= link_to 'Add an Answer', new_course_lesson_forum_question_answer_path(@question.forum.lesson.course, @question.forum.lesson, @question.forum, @question), class: 'btn btn-success mt-3' %>
-
-  <%= link_to 'Back to Questions', course_lesson_forum_questions_path(@question.forum.lesson.course, @question.forum.lesson, @question.forum), class: 'btn btn-secondary mt-3' %>
 </div>
