@@ -12,7 +12,8 @@
       <div class="col-md-4">
         <div class="card mb-4">
           <div class="card-body">
-            <h5 class="card-title"><%= course.name %></h5> <!-- Use `name` instead of `title` -->
+            <h5 class="card-title"><%= course.name %></h5> <!-- Nombre del curso -->
+            <p class="card-text">Teacher: <%= course.teacher.full_name %></p> <!-- Nombre del profesor -->
             <a href="<%= course_path(course) %>" class="btn btn-primary">View Course</a>
           </div>
         </div>
@@ -20,4 +21,3 @@
     <% end %>
   </div>
 </div>
-
