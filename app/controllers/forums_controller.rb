@@ -1,6 +1,7 @@
 class ForumsController < ApplicationController
   before_action :set_course_and_lesson, only: [:new, :create, :index, :show, :edit, :update, :destroy]
   before_action :set_forum, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_teacher!, only: [:edit, :update, :destroy]
 
   def index
     @forums = @lesson.forums
@@ -33,11 +34,7 @@ class ForumsController < ApplicationController
   end
   
   def edit
-    @course = Course.find(params[:course_id]) # Find the course
-    @lesson = @course.lessons.find(params[:lesson_id]) # Find the lesson
-    @forum = @lesson.forums.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to course_lesson_forums_path(@course, @lesson), alert: "Forum not found."
+    # La lógica de edición ya está protegida por el before_action :authorize_teacher!
   end
 
   def update
@@ -47,7 +44,6 @@ class ForumsController < ApplicationController
       render :edit
     end
   end
-
 
   def destroy
     @forum = @lesson.forums.find(params[:id]) # Ensure you find the forum first
@@ -67,6 +63,10 @@ class ForumsController < ApplicationController
     @forum = @lesson.forums.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to lesson_forums_path(@lesson), alert: "Forum not found."
+  end
+
+  def authorize_teacher!
+    redirect_to course_lesson_forums_path(@course, @lesson), alert: 'You are not authorized to perform this action.' unless current_utilizer.teacher?
   end
 
   def forum_params
