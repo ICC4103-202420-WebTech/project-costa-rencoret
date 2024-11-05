@@ -9,9 +9,7 @@
         <h5 class="mb-1">"<%= question.title %>" by <%= question.utilizer.full_name %></h5>
         <p><%= question.content %></p>
         <%= link_to 'Show', course_lesson_forum_question_path(@forum.lesson.course, @forum.lesson, @forum, question), class: 'btn btn-info' %>
-        <%= link_to 'Edit', edit_course_lesson_forum_question_path(@forum.lesson.course, @forum.lesson, @forum, question), class: 'btn btn-primary' %>
         <%= button_to 'Delete', course_lesson_forum_question_path(@forum.lesson.course, @forum.lesson, @forum, question), method: :delete , class: 'btn btn-danger btn-sm' , data: {turbo_confirm: 'Are you sure?'}  %>
-
       </li>
     <% end %>
   </ul>
