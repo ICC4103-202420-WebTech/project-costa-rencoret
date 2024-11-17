@@ -59,7 +59,9 @@ class LessonsController < ApplicationController
   end
 
   def authorize_teacher!
-    redirect_to course_path(@course), alert: 'You are not authorized to perform this action.' unless current_utilizer.teacher?
+    unless @course.teacher == current_utilizer
+      redirect_back_or_to root_path, alert: "You are not authorized to #{action_name} this lesson."
+    end
   end
 
   def lesson_params

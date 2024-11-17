@@ -66,7 +66,9 @@ class ForumsController < ApplicationController
   end
 
   def authorize_teacher!
-    redirect_to course_lesson_forums_path(@course, @lesson), alert: 'You are not authorized to perform this action.' unless current_utilizer.teacher?
+    unless @course.teacher == current_utilizer
+      redirect_back_or_to root_path, alert: "You are not authorized to #{action_name} this forum." 
+    end
   end
 
   def forum_params
