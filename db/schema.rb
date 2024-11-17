@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_04_034323) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_17_182148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -99,6 +99,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_034323) do
     t.index ["lesson_id"], name: "index_forums_on_lesson_id"
   end
 
+  create_table "lesson_completions", force: :cascade do |t|
+    t.bigint "utilizer_id", null: false
+    t.bigint "lesson_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lesson_id"], name: "index_lesson_completions_on_lesson_id"
+    t.index ["utilizer_id"], name: "index_lesson_completions_on_utilizer_id"
+  end
+
   create_table "lessons", force: :cascade do |t|
     t.bigint "course_id", null: false
     t.string "title"
@@ -148,6 +157,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_04_034323) do
   add_foreign_key "course_progresses", "utilizers"
   add_foreign_key "courses", "utilizers", column: "teacher_id"
   add_foreign_key "forums", "lessons", on_delete: :cascade
+  add_foreign_key "lesson_completions", "lessons"
+  add_foreign_key "lesson_completions", "utilizers"
   add_foreign_key "lessons", "courses", on_delete: :cascade
   add_foreign_key "questions", "forums", on_delete: :cascade
   add_foreign_key "questions", "utilizers"
