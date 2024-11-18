@@ -19,12 +19,15 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
+    @course.teacher = current_utilizer # Asigna el profesor al curso
+  
     if @course.save
       redirect_to @course, notice: 'Course was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
+  
 
   def edit
     @course = Course.find(params[:id])
@@ -59,10 +62,19 @@ class CoursesController < ApplicationController
   end
 
   def authorize_teacher!
-    unless @course.teacher == current_utilizer
-      redirect_back_or_to root_path, alert: "You are not authorized to #{action_name} this course." 
+    if %w[new create].include?(action_name)
+      # Verifica que el usuario actual sea un profesor
+      unless current_utilizer&.teacher?
+        redirect_back_or_to root_path, alert: "You are not authorized to #{action_name} a course."
+      end
+    else
+      # Para otras acciones, verifica que el profesor sea el dueño del curso
+      unless @course.teacher == current_utilizer
+        redirect_back_or_to root_path, alert: "You are not authorized to #{action_name} this course."
+      end
     end
   end
+  
 
   def course_params
     params.require(:course).permit(:name, :category, :teacher_id)
